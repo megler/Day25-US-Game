@@ -22,7 +22,7 @@ turtle.shape(image)
 score = Score()
 state_writer = State_writer()
 guesses = []
-missed = []
+
 
 df = pd.read_csv("50_states.csv")
 states = df.state.to_list()
@@ -44,9 +44,7 @@ while score.score < 50:
             state_writer.draw(x[0], y[0], answer_state)
             score.raise_score()
     if answer_state == "Exit":
-        for state in states:
-            if state not in guesses:
-                missed.append(state)
+        missed = [state for state in states if state not in guesses]
         missed_df = pd.DataFrame(data=missed)
         missed_df.to_csv("missed_states.csv")
         break
